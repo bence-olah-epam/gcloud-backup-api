@@ -1,0 +1,86 @@
+---
+basePath: /v1
+info:
+  description: "This service is for keeping a registry of the photos to be uploaded to google photos using API. The status of the photos is registered, for example, backed-up, not-backed-up."
+  title: "GCloud photo upload"
+  version: "1.0.0"
+
+paths:
+  /photo:
+    post:
+      consumes:
+        - application/json
+      description: "Creates new photos"
+      operationId: addPhoto
+      parameters:
+        -
+          description: "Photo to be stored"
+          in: body
+          name: body
+          required: true
+          schema:
+            $ref: "#/definitions/Photo"
+      produces:
+        - application/xml
+      responses:
+        204:
+          description: "OK. Asset tags were updated successfully."
+        400:
+          description: "Request parameter is not valid."
+      summary: "Registering a new photo"
+  /photo/{photoID}:
+    get:
+      description: "Returns the given photo"
+      parameters:
+          - in: path
+            name: photoID
+            type: "string"
+            format: "uuid"
+            required: true
+            description: "The id of the photo"
+      responses:
+        200:
+          description: "The photo to be returned"
+          schema:
+            $ref: "#/definitions/Photo"
+  /photo/:
+    get:
+      description: "Returns the given photo"
+      parameters:
+          - in: query
+            name: status
+            type: "string"
+            required: true
+      responses:
+        200:
+          description: "The list of photos to be returned"
+          schema:
+            $ref: "#/definitions/PhotoList"
+schemes:
+  - http
+swagger: "2.0"
+
+definitions:
+  Photo:
+    properties:
+      fileName:
+        example: sample.jpg
+        type: string
+      folderName:
+        example: /2018/birthday
+        type: string
+      status:
+        default: non_synced
+        enum:
+          - synced
+          - non_synced
+          - failed
+        type: string
+    type: object
+  PhotoList:
+    type: "object"
+    properties:
+      data:
+        type: "array"
+        items:
+          $ref: "#/definitions/Photo"
