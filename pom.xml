@@ -4,24 +4,30 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <properties>
+        <java.version>1.8</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
+
     <groupId>com.olah</groupId>
     <artifactId>gcloud-backup-api</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-
     <dependencies>
-            <dependency>
-                <groupId>io.swagger</groupId>
-                <artifactId>swagger-annotations</artifactId>
-                <version>1.5.21</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-web</artifactId>
-                <version>2.0.4.RELEASE</version>
-            </dependency>
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>1.5.20</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>2.0.4.RELEASE</version>
+        </dependency>
     </dependencies>
-
 
 
     <build>
@@ -32,6 +38,7 @@
                 <configuration>
                     <inputSpec>${project.basedir}/src/main/resources/gcloud-backup-service.yaml</inputSpec>
                     <output>${project.build.directory}/generated-sources</output>
+
                 </configuration>
                 <executions>
                     <execution>
@@ -53,5 +60,46 @@
                 </executions>
             </plugin>
         </plugins>
+
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                </plugin>
+                <plugin>
+                    <groupId>io.swagger</groupId>
+                    <artifactId>swagger-codegen-maven-plugin</artifactId>
+                    <version>2.3.1</version>
+                    <executions>
+                        <execution>
+                            <id>generate-java</id>
+                            <goals>
+                                <goal>generate</goal>
+                            </goals>
+                            <configuration>
+                                <language>spring</language>
+                                <modelNamePrefix>Api</modelNamePrefix>
+                                <configOptions>
+                                    <sourceFolder>swagger-codegen</sourceFolder>
+                                    <java8>true</java8>
+                                    <interfaceOnly>true</interfaceOnly>
+                                    <useOptional>true</useOptional>
+                                </configOptions>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>generate-json</id>
+                            <goals>
+                                <goal>generate</goal>
+                            </goals>
+                            <configuration>
+                                <language>swagger</language>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 </project>
