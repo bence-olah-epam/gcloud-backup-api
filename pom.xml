@@ -29,6 +29,8 @@
         </dependency>
     </dependencies>
 
+    <!-- https://github.com/swagger-api/swagger-codegen/blob/master/modules/swagger-codegen-maven-plugin/examples/java-client.xml -->
+
 
     <build>
         <plugins>
