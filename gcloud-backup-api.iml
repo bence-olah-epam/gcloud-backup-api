@@ -11,6 +11,8 @@
       <sourceFolder url="file://$MODULE_DIR$/target/generated-sources/docs" isTestSource="false" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/target/generated-sources/gradle" isTestSource="false" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/target/generated-sources/src/test/java" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />
