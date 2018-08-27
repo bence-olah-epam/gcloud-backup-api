@@ -48,10 +48,6 @@
         </dependency>
 
 
-
-
-
-
     </dependencies>
 
     <!-- https://github.com/swagger-api/swagger-codegen/blob/master/modules/swagger-codegen-maven-plugin/examples/java-client.xml
@@ -146,47 +142,15 @@
                 </dependency>
             </dependencies>
             <build>
-            <plugins>
-                <plugin>
-                    <groupId>io.swagger</groupId>
-                    <artifactId>swagger-codegen-maven-plugin</artifactId>
-                    <configuration>
-                        <inputSpec>${project.basedir}/src/main/resources/gcloud-backup-service.yaml</inputSpec>
-                        <output>${project.build.directory}/generated-sources</output>
-
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <id>generate-java</id>
-                            <goals>
-                                <goal>generate</goal>
-                            </goals>
-                            <configuration>
-                                <apiPackage>com.olah.gcloud.backup.api</apiPackage>
-                                <modelPackage>com.olah.gcloud.backup.api.model</modelPackage>
-                            </configuration>
-                        </execution>
-                        <execution>
-                            <id>generate-json</id>
-                            <goals>
-                                <goal>generate</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-            </plugins>
-
-
-            <pluginManagement>
                 <plugins>
-                    <plugin>
-                        <groupId>org.springframework.boot</groupId>
-                        <artifactId>spring-boot-maven-plugin</artifactId>
-                    </plugin>
                     <plugin>
                         <groupId>io.swagger</groupId>
                         <artifactId>swagger-codegen-maven-plugin</artifactId>
-                        <version>2.3.1</version>
+                        <configuration>
+                            <inputSpec>${project.basedir}/src/main/resources/gcloud-backup-service.yaml</inputSpec>
+                            <output>${project.build.directory}/generated-sources</output>
+
+                        </configuration>
                         <executions>
                             <execution>
                                 <id>generate-java</id>
@@ -194,14 +158,8 @@
                                     <goal>generate</goal>
                                 </goals>
                                 <configuration>
-                                    <language>jaxrs-cxf</language>
-                                    <modelNamePrefix>Api</modelNamePrefix>
-                                    <configOptions>
-                                        <sourceFolder>swagger-codegen</sourceFolder>
-                                        <java8>true</java8>
-                                        <interfaceOnly>true</interfaceOnly>
-                                        <useOptional>true</useOptional>
-                                    </configOptions>
+                                    <apiPackage>com.olah.gcloud.backup.api</apiPackage>
+                                    <modelPackage>com.olah.gcloud.backup.api.model</modelPackage>
                                 </configuration>
                             </execution>
                             <execution>
@@ -209,14 +167,68 @@
                                 <goals>
                                     <goal>generate</goal>
                                 </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-jar-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
                                 <configuration>
-                                    <language>swagger</language>
+                                    <classifier>server</classifier>
                                 </configuration>
                             </execution>
                         </executions>
                     </plugin>
                 </plugins>
-            </pluginManagement>
+
+
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.springframework.boot</groupId>
+                            <artifactId>spring-boot-maven-plugin</artifactId>
+                        </plugin>
+                        <plugin>
+                            <groupId>io.swagger</groupId>
+                            <artifactId>swagger-codegen-maven-plugin</artifactId>
+                            <version>2.3.1</version>
+                            <executions>
+                                <execution>
+                                    <id>generate-java</id>
+                                    <goals>
+                                        <goal>generate</goal>
+                                    </goals>
+                                    <configuration>
+                                        <language>jaxrs-cxf</language>
+                                        <modelNamePrefix>Api</modelNamePrefix>
+                                        <configOptions>
+                                            <sourceFolder>swagger-codegen</sourceFolder>
+                                            <java8>true</java8>
+                                            <interfaceOnly>true</interfaceOnly>
+                                            <useOptional>true</useOptional>
+                                        </configOptions>
+                                    </configuration>
+                                </execution>
+                                <execution>
+                                    <id>generate-json</id>
+                                    <goals>
+                                        <goal>generate</goal>
+                                    </goals>
+                                    <configuration>
+                                        <language>swagger</language>
+                                    </configuration>
+                                </execution>
+
+
+                            </executions>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
             </build>
         </profile>
         <profile>
@@ -292,63 +304,80 @@
                                 </execution>
                             </executions>
                         </plugin>
+
+
+                        <plugin>
+                            <artifactId>maven-jar-plugin</artifactId>
+                            <executions>
+                                <execution>
+                                    <phase>package</phase>
+                                    <goals>
+                                        <goal>jar</goal>
+                                    </goals>
+                                    <configuration>
+                                        <classifier>client</classifier>
+                                    </configuration>
+                                </execution>
+                            </executions>
+                        </plugin>
+
                     </plugins>
                 </pluginManagement>
             </build>
-<dependencies>
-            <dependency>
-                <groupId>io.swagger</groupId>
-                <artifactId>swagger-annotations</artifactId>
-                <version>${swagger-annotations-version}</version>
-            </dependency>
+            <dependencies>
+                <dependency>
+                    <groupId>io.swagger</groupId>
+                    <artifactId>swagger-annotations</artifactId>
+                    <version>${swagger-annotations-version}</version>
+                </dependency>
 
-            <!-- HTTP client: Spring RestTemplate -->
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-web</artifactId>
-                <version>${spring-web-version}</version>
-            </dependency>
+                <!-- HTTP client: Spring RestTemplate -->
+                <dependency>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-web</artifactId>
+                    <version>${spring-web-version}</version>
+                </dependency>
 
-            <!-- JSON processing: jackson -->
-            <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-core</artifactId>
-                <version>${jackson-version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-annotations</artifactId>
-                <version>${jackson-version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-databind</artifactId>
-                <version>${jackson-version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.jaxrs</groupId>
-                <artifactId>jackson-jaxrs-json-provider</artifactId>
-                <version>${jackson-version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.datatype</groupId>
-                <artifactId>jackson-datatype-jsr310</artifactId>
-                <version>${jackson-version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.github.joschi.jackson</groupId>
-                <artifactId>jackson-datatype-threetenbp</artifactId>
-                <version>${jackson-threetenbp-version}</version>
-            </dependency>
+                <!-- JSON processing: jackson -->
+                <dependency>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-core</artifactId>
+                    <version>${jackson-version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-annotations</artifactId>
+                    <version>${jackson-version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-databind</artifactId>
+                    <version>${jackson-version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>com.fasterxml.jackson.jaxrs</groupId>
+                    <artifactId>jackson-jaxrs-json-provider</artifactId>
+                    <version>${jackson-version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>com.fasterxml.jackson.datatype</groupId>
+                    <artifactId>jackson-datatype-jsr310</artifactId>
+                    <version>${jackson-version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>com.github.joschi.jackson</groupId>
+                    <artifactId>jackson-datatype-threetenbp</artifactId>
+                    <version>${jackson-threetenbp-version}</version>
+                </dependency>
 
-            <!-- test dependencies -->
-            <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <version>${junit-version}</version>
-                <scope>test</scope>
-            </dependency>
-</dependencies>
+                <!-- test dependencies -->
+                <dependency>
+                    <groupId>junit</groupId>
+                    <artifactId>junit</artifactId>
+                    <version>${junit-version}</version>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
         </profile>
 
 
