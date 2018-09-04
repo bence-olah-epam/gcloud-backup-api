@@ -66,7 +66,7 @@ definitions:
       fileName:
         example: sample.jpg
         type: string
-      folderName:
+      folderPath:
         example: /2018/birthday
         type: string
       status:
