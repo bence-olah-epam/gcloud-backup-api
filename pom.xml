@@ -226,6 +226,8 @@
                                 <configuration>
                                     <apiPackage>com.olah.gcloud.backup.api</apiPackage>
                                     <modelPackage>com.olah.gcloud.backup.api.model</modelPackage>
+                                    <generateApiTests>false</generateApiTests>
+                                    <generateModelTests>false</generateModelTests>
                                 </configuration>
                             </execution>
                             <execution>
