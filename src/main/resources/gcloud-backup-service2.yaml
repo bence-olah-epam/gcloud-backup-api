@@ -24,7 +24,7 @@ paths:
         - application/xml
       responses:
         204:
-          description: "OK. Photo was stored successfully."
+          description: "OK. Asset tags were updated successfully."
         400:
           description: "Request parameter is not valid."
       summary: "Registering a new photo"
@@ -61,7 +61,6 @@ definitions:
       status:
         default: not_synced
         type: "string"
-        enum: *PHOTOSTATUS
     type: object
   PhotoList:
     type: "object"
@@ -77,5 +76,4 @@ definitions:
       status:
         default: not_synced
         type: "string"
-        enum: *PHOTOSTATUS
     type: object

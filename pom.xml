@@ -351,11 +351,10 @@
                                     <configuration>
                                         <language>java</language>
                                         <library>resttemplate</library>
-                                        <modelNamePrefix>Api</modelNamePrefix>
                                         <configOptions>
                                             <sourceFolder>swagger-codegen</sourceFolder>
                                             <java8>true</java8>
-                                            <interfaceOnly>true</interfaceOnly>
+                                            <interfaceOnly>false</interfaceOnly>
                                             <useOptional>true</useOptional>
                                         </configOptions>
                                     </configuration>
